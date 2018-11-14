@@ -75,9 +75,20 @@ function processCommand(cmdParts) {          // TODO: Return a promise instead o
 function searchSummonerName(args) {
     api.get(strings.regions[args[0]], 'summoner.getBySummonerName', formSummonerName(args, 0))
         .then((res) => {
-            console.log("searchSummonerName: ");
-            console.log(res);
-            botSay(formOpGGUrl(args))
+            if(res) botSay(formOpGGUrl(args));
+            else    botSay(strings.errMessage.summonerNotFound);
+
+            //api call to get all champ masteries with a given acc
+            /*api.get(strings.regions[args[0]], 'championMastery.getAllChampionMasteries', res.id)
+                .then((res) => {
+                    console.log(res);
+                    // embedBuilder(args, res);
+                }).catch((e) => {
+                console.log("Teemo unable to get summoner");
+                console.log(e.toString());
+            });*/
+
+            // embedBuilder(args, res);
     }).catch((e) => {
         console.log("Teemo unable to get summoner");
         console.log(e.toString());
@@ -112,6 +123,36 @@ function formOpGGUrl(args) {
         return `http://${args[0].toLowerCase()}.op.gg/summoner/userName=${name}`;
 }
 
+function embedBuilder(args, apiResponse){
+    const embed = new Discord.RichEmbed()
+        .setTitle("This is your title, it can hold 256 characters")
+        .setAuthor(formSummonerName(args, 0), "https://i.imgur.com/lm8s41J.png")
+        /*
+         * Alternatively, use "#00AE86", [0, 174, 134] or an integer number.
+         */
+        .setColor(0x88d811)
+        .setDescription(`This is the main body of text, it can hold 2048 characters.`)
+        .setFooter("This is the footer text, it can hold 2048 characters", "http://i.imgur.com/w1vhFSR.png")
+        .setImage("http://i.imgur.com/yVpymuV.png")
+        .setThumbnail("http://i.imgur.com/p2qNFag.png")
+        /*
+         * Takes a Date object, defaults to current date.
+         */
+        .setTimestamp()
+        .setURL("https://discord.js.org/#/docs/main/indev/class/RichEmbed")
+        .addField("This is a field title, it can hold 256 characters",
+            "This is a field value, it can hold 1024 characters.")
+        /*
+         * Inline fields may not display as inline if the thumbnail and/or image is too big.
+         */
+        .addField("Inline Field", `${args}`, true)
+        /*
+         * Blank field, useful to create some space.
+         */
+        .addBlankField(true);
+
+        botSay(embed);
+}
 
 client.login(DISCORD_API_TOKEN)
     .catch((e)=>{
