@@ -11,22 +11,17 @@ module.exports = {
         //  TODO: Bot displays appropriate error message
         switch(primary.toLowerCase()){
             case 's': {
-                // console.log(!(args[0] in strings.regions));
                 if(args.length < 2) {
                     console.log("Too few args supplied");
-                    // botSay(errMesg)
                     return [false, strings.errMessage["invalidUseS"]];
                 }
                 if(!(args[0].toLowerCase() in strings.regions)){
                     console.log("not a valid region identifier");
-                    // botSay(errMesg)
                     return false;
                 }
                 let name = formSummonerName(args.slice(0));
-                console.log(name + ` is ${name.length}`);
                 if(name.length > 16){
                     console.log("Invalid Summoner Name: Too long");
-                    // botSay(errMesg)
                     return false;
                 }
                 /*if(!name matches Regex){
@@ -46,12 +41,10 @@ module.exports = {
                 console.log(args.length);
                 if(args.length > 1){
                     console.log("Too many args supplied");
-                    // botSay(errMesg)
                     return [false,strings.errMessage.invalidUseHELP];
                 }
                 if(args.length === 1 && !(args[0].toLowerCase() in strings.commands)){
                     console.log("Unknown command: invalid arg to '>help [cmd]'");
-                    // botSay(errMesg)
                     return [false,strings.errMessage.invalidUseHELP];
                 }
                 return [true, splitCmd];
@@ -59,7 +52,6 @@ module.exports = {
             // -----------------------------------------------------------------------------
             default:{
                 console.log("Unknown cmd");
-                // botSay(errMsg)
                 return [false, strings.errMessage.unknownCmd];
             }
         }
