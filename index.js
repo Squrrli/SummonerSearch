@@ -73,24 +73,24 @@ function processCommand(cmdParts) {          // TODO: Return a promise instead o
 }
 
 function searchSummonerName(args) {
+    console.log("searchSummonerName: ");
     api.get(strings.regions[args[0]], 'summoner.getBySummonerName', formSummonerName(args, 0))
         .then((res) => {
-            if(res) botSay(formOpGGUrl(args));
-            else    botSay(strings.errMessage.summonerNotFound);
-
-            //api call to get all champ masteries with a given acc
-            /*api.get(strings.regions[args[0]], 'championMastery.getAllChampionMasteries', res.id)
+            if(res) botSay(formOpGGUrl(args));                          // embedBuilder(args, res);
+            else    botSay(strings.errMessage.summonerNotFound);        // embedBuilder(args, res);
+            console.log(res);
+// api.get(strings.regions[args[0]], 'match.getMatchList', res["id"])
+            api.get(strings.regions[args[0]], 'match.getMatchList', 56924669)
                 .then((res) => {
                     console.log(res);
                     // embedBuilder(args, res);
                 }).catch((e) => {
                 console.log("Teemo unable to get summoner");
                 console.log(e.toString());
-            });*/
-
+            });
             // embedBuilder(args, res);
     }).catch((e) => {
-        console.log("Teemo unable to get summoner");
+        console.log(e.stack);
         console.log(e.toString());
     });
 }
