@@ -1,17 +1,18 @@
 const Discord = require('discord.js');
-// const request = require('snekfetch');
-const TeemoJS = require('teemojs');
-const Regions = require('./regions.json');
-
-let api = TeemoJS('RGAPI-09f0406d-6ffa-4ee7-8ea0-9ae3fc1329ca');
 const client = new Discord.Client();
+
+const TeemoJS = require('teemojs');
+let api = TeemoJS('RGAPI-09f0406d-6ffa-4ee7-8ea0-9ae3fc1329ca');
+
+const Regions = require('./regions.json');
+const Validator = require('./validate-input');
+
 const RIOT_API_TOKEN = "MUST BE REGENERATED";
 const DISCORD_API_TOKEN = "NTEwMzc2Mzc5MTYyOTUxNjgy.DsbdHw._9aZew87jeunfQl6hzvW1bPlpEs";
-
 const unknownCmd = "***Unknown Command:***\t\'**>help**\' for command list and usage";
 
 
-class Lobby{
+/*class Lobby{
     constructor(){
         this.summoners = new Array(10);
         this.gameId = -1;
@@ -31,7 +32,7 @@ class Lobby{
             });
     }
     getTournamentGames(tournamentCode){
-        let url = `https://euw1.api.riotgames.com/lol/match/v3/matches/by-tournament-code/${tournamentCode}/ids`
+        let url = `https://euw1.api.riotgames.com/lol/match/v3/matches/by-tournament-code/${tournamentCode}/ids`;
         let games;
         request.get(url)
             .then((res) => {
@@ -40,11 +41,11 @@ class Lobby{
             })
     }
     gameSearch(games){
-        let url = `https://euw1.api.riotgames.com/lol/match/v3/matches/${matchId}`
+        let url = `https://euw1.api.riotgames.com/lol/match/v3/matches/${matchId}`;
 
         games.forEach((g) =>{
 
-        })
+        });
 
         request.get(url)
             .then((res) => {
@@ -52,8 +53,7 @@ class Lobby{
                 this.gameSearch(games);
             })
     }
-}
-
+}*/
 
 
 client.on('ready', () => {
@@ -69,7 +69,7 @@ client.on('ready', () => {
         guild.channels.forEach((channel) => {
             console.log(` -- ${channel.name} (${channel.type}) - ${channel.id}`);
         })
-    })
+    });
     console.log("------------------------------------------");
 });
 
@@ -79,14 +79,17 @@ client.on('message', (recvMessage) => {
     }
 
     if(recvMessage.content.startsWith('>')){
-        let response = processCommand(recvMessage);     // TODO: change to wait on a promise
+        Validator.validate(recvMessage);
+
+
+        /*let response = processCommand(recvMessage);     // TODO: change to wait on a promise
 
         response.then((res) => {
             // console.log("result of summonsearch: " + res);
         }).catch((error)=> {
             console.log("error caught in processCommand Promise");
             console.log(error.toString());
-        });
+        });*/
         /*recvMessage.channel.send(response)
             .catch((e)=>{
                 console.log(`Unable to send message\t ${e}`);
@@ -219,7 +222,7 @@ function formSummonerName(args, mode){
 }
 
 function formOpGGUrl(args) {
-    let name = formSummonerName(args,1)
+    let name = formSummonerName(args,1);
     if(args[0].toLowerCase() === 'kr'){
         return `http://www.op.gg/summoner/userName=${name}`;
     }else                                                                           // TODO: Check if supplied region is valid (object structure)
@@ -237,7 +240,7 @@ function validateName(args){
         let name = "";
         args.forEach((x) => {
             name = name.concat(x);
-        })
+        });
         if(name.length > 16 || name.length < 1){
             console.log("Name too long");
             return false;
