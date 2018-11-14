@@ -4,7 +4,7 @@ const client = new Discord.Client();
 const TeemoJS = require('teemojs');
 let api = TeemoJS('RGAPI-09f0406d-6ffa-4ee7-8ea0-9ae3fc1329ca');
 
-const Regions = require('./regions.json');
+const strings = require('./strings.json');
 const Validator = require('./validate-input');
 
 const RIOT_API_TOKEN = "MUST BE REGENERATED";
@@ -79,8 +79,16 @@ client.on('message', (recvMessage) => {
     }
 
     if(recvMessage.content.startsWith('>')){
-        Validator.validate(recvMessage);
-
+        let validInput = Validator.validate(recvMessage);
+        if(validInput[0]){
+            processCommand(validInput[1])
+        }else{
+            // Send error msg to User
+            recvMessage.channel.send(validInput[1])
+                .catch((e)=>{
+                    console.log(`Unable to send message\t ${e}`);
+                });
+        }
 
         /*let response = processCommand(recvMessage);     // TODO: change to wait on a promise
 
@@ -134,7 +142,7 @@ client.on('message', (recvMessage) => {
     }
 }*/
 function processCommand(recvMessage) {
-    return new Promise((resolve, reject) => {
+    /*return new Promise((resolve, reject) => {
         let cmd = recvMessage.content.substr(1, recvMessage.length);
         let splitCmd = cmd.split(" ");
         let primary = splitCmd[0];
@@ -166,11 +174,11 @@ function processCommand(recvMessage) {
             default:
                 return unknownCmd;
         }
-    })
+    })*/
 }
 
 function searchSummonerName(args) {
-    api.get(Regions[args[0]], 'summoner.getBySummonerName', formSummonerName(args, 0))    // .then(() => {} );
+    api.get(strings[args[0]], 'summoner.getBySummonerName', formSummonerName(args, 0))    // .then(() => {} );
         .then((res) => {
             console.log("searchSummonerName: ");
             console.log(res);

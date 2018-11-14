@@ -1,0 +1,28 @@
+{
+    "errMessage": {
+        "unknownCmd": "\nGiven Command is Unknown, type ***>help*** for a list of all commands",
+        "summonerNotFound" : "\nGiven summoner name does not exist/ is invalid, ensure correct spelling and proper usage of the desired command",
+        "invalidUseS" : "\n__**InvalidInput: **__\nTo search for a player *>s {region id} {summoner name}*\nFor full usage type **>help s**",
+        "invalidUseLS" : "\n__**InvalidInput: **__\nTo search for a player *>ls {tournament code} {summoner name}*\nFor full usage type **>help ls**",
+        "invalidUseHELP" : "\n__**InvalidInput:**__\nTo view help for a specific command *>help {cmd}*\nTo view list of commands type **>help**"
+    },
+    "regions": {
+        "euw": "euw1",
+        "na": "na1",
+        "br": "br1",
+        "eune": "eune1",
+        "jp": "jp1",
+        "kr": "kr",
+        "lan": "la1",
+        "las": "la2",
+        "oce": "oc1",
+        "tr": "tr1",
+        "ru": "ru",
+        "pbe": "pbe1"
+    },
+    "commands": {
+        "help": "help",
+        "s": "s",
+        "ls": "ls"
+    }
+}
