@@ -17,12 +17,12 @@ module.exports = {
                 }
                 if(!(args[0].toLowerCase() in strings.regions)){
                     console.log("not a valid region identifier");
-                    return false;
+                    return [false, strings.errMessage.invalidRegionID];
                 }
                 let name = formSummonerName(args.slice(0));
                 if(name.length > 16){
                     console.log("Invalid Summoner Name: Too long");
-                    return false;
+                    return [false, strings.errMessage.summonerNotFound];
                 }
                 /*if(!name matches Regex){
                     console.log("Invalid Summoner Name: Does not match regex");

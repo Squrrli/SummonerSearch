@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 
 const TeemoJS = require('teemojs');
-let api = TeemoJS('RGAPI-b9a24ecc-f7ad-45d4-8520-72b289fbe3e0');
+let api = TeemoJS('RGAPI-a5a1f5b2-300d-417f-9961-d195e40f438f');
 
 const strings = require('./strings.json');
 const Validator = require('./validate-input');
@@ -79,15 +79,14 @@ function searchSummonerName(args) {
             if(res) botSay(formOpGGUrl(args));                          // embedBuilder(args, res);
             else    botSay(strings.errMessage.summonerNotFound);        // embedBuilder(args, res);
             console.log(res);
-// api.get(strings.regions[args[0]], 'match.getMatchList', res["id"])
-            api.get(strings.regions[args[0]], 'match.getMatchList', 56924669)
+            /*api.get(strings.regions[args[0]], 'match.getRecentMatchlist', res.id)         // TODO: Find out why matchlist requests are not working (return either null or 403 forbidden)
                 .then((res) => {
                     console.log(res);
                     // embedBuilder(args, res);
                 }).catch((e) => {
                 console.log("Teemo unable to get summoner");
                 console.log(e.toString());
-            });
+            });*/
             // embedBuilder(args, res);
     }).catch((e) => {
         console.log(e.stack);
